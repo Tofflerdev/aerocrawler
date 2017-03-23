@@ -9,16 +9,19 @@ browser.goto 'https://www.aeroflot.ru/ru-ru/destination_offers'
 
 doc = Nokogiri::HTML(browser.html)
 
+#создаем массив
 arr = []
 
+#обрабатываем каждое предложение
 doc.css('.directions__item').each do |item|
 
-from = item.at_css('.directions__from').content.strip
-to = item.at_css('.directions__to').content.strip
-price = item.at_css('.directions__price').content.strip
-tariff = item.at_css('.directions__tariff').content.strip
-date = item.at_css('.directions__date').content.strip
+from = item.at_css('.directions__from').content.strip #забираем направление from
+to = item.at_css('.directions__to').content.strip #забираем направление to
+price = item.at_css('.directions__price').content.strip #забираем цену
+tariff = item.at_css('.directions__tariff').content.strip#забираем тариф
+date = item.at_css('.directions__date').content.strip#забираем дату
 
+#добавляем собранную инфу в массив, хеш == предложение
 arr << {
 :from => from,
 :to => to,
@@ -29,24 +32,9 @@ arr << {
 
 end
 
+#выводим инфу в строку по ключам
 arr.each do |item|
 
 puts "#{item[:from]},#{item[:to]},#{item[:price]},#{item[:tariff]},#{item[:date]}"
 
 end
-
-
-#doc.css('.directions__to').each do |item|
-
-
-#puts item.content
-
-#end
-
-
-
-#doc.at_css('[id = "tariffsTable"]').css('.directions__item').each do |item|
-
-#puts item.css('.directions__to').text
-
-#end
